@@ -1,0 +1,62 @@
+.autoComplete {
+  position: absolute;
+  width: 100%;
+  max-width: 644px;
+  bottom: -1px;
+  right: 25px;
+  transform: translateY(100%);
+  padding: 20px;
+  display: flex;
+  background: #ffffff;
+  border: 1px solid #f1f4f6;
+  box-shadow: -20px 20px 40px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 18px;
+  z-index: 1;
+}
+
+.autoComplete .comp {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.complete {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8c8b8b;
+  cursor: pointer;
+}
+.complete:hover {
+  color: #000;
+}
+/* .autoComplete .comp div {
+  width: 100%;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.712);
+  font-family: Roboto;
+  padding: 0.6em 10px 0.6em 9px;
+}
+.autoComplete .comp {
+  width: 45%;
+  margin-right: -48px;
+}
+.autoComplete .comp div:hover {
+  background-color: #01756c;
+  color: white;
+} */
+
+@media screen and (max-width: 800px) {
+  .autoComplete {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 485px) {
+  .autoComplete {
+    bottom: -40px;
+    right: 40px;
+  }
+}

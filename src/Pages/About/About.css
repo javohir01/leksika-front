@@ -1,0 +1,253 @@
+.about {
+  position: relative;
+  width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+.about-modal {
+  width: 100%;
+  max-width: 600px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 30px 40px;
+}
+.about-modal-title {
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.about-modal-title h2 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.about-modal-title p {
+  font-size: 16px;
+  line-height: 24px;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0000006e;
+}
+.about-container {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.about-desc {
+  width: 100%;
+  max-width: 846px;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+.about-desc p {
+  font-size: 16px !important;
+  line-height: 24px;
+}
+.about-line {
+  width: 100%;
+  max-width: 1280px;
+  height: 1px;
+  background: #ddd;
+  border: none;
+  margin-bottom: 60px;
+}
+
+.about-card {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.about-card h3 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+  color: #01756c;
+}
+.about-card-content {
+  width: 100%;
+  max-width: 847px;
+}
+.about-card p {
+  font-size: 16px !important;
+  line-height: 24px;
+  color: #000000;
+}
+.about-card a {
+  text-decoration: none;
+  color: #01756c;
+}
+.about-card ul {
+  margin-left: 20px;
+}
+.about-card:last-child {
+  position: relative;
+}
+.team {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.team-box {
+  width: 100%;
+  max-width: 414px;
+  background: #ffffff;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 18px;
+  text-align: center;
+  padding-bottom: 30px;
+}
+.team-box > div {
+  position: relative;
+}
+.team-box-img {
+  width: 100%;
+  max-width: 414px;
+  height: 427px;
+  object-fit: cover;
+  object-position: 100% 10%;
+  border-radius: 18px 18px 0px 0px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.team-img-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  cursor: pointer;
+}
+.team-box > div:hover .team-img-btn {
+  display: inline-block;
+}
+.team-box > div:hover .team-box-img {
+  filter: brightness(0.4);
+}
+.team-box h4 {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+
+  color: #000000;
+}
+.team-box hr {
+  width: 130px;
+  height: 1px;
+  margin: 10px auto;
+  border: none;
+  background: #01756c;
+}
+.team-btn {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 46px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid #01756c;
+  border-radius: 24px 0px;
+  color: #01756c;
+  font-family: "Poppins";
+  font-size: 20px;
+  cursor: pointer;
+}
+.team-btn:hover {
+  background: #01756c;
+  color: #fff;
+}
+@media screen and (max-width: 900px) {
+  .about-card {
+    flex-direction: column;
+  }
+  .team-box-img {
+    object-position: center 10%;
+  }
+}
+@media screen and (max-width: 720px) {
+  .about-desc {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 10px;
+  }
+  .about-card:not(:last-child) {
+    box-sizing: border-box;
+    padding: 12px 7px;
+    background: #ffffff;
+    border-radius: 18px;
+  }
+  .about-card h3 {
+    margin-left: 10px;
+    margin-bottom: 5px;
+  }
+  .about-card:last-child h3 {
+    text-align: center;
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+  .about-card-content {
+    max-width: 95%;
+    margin-left: 10px;
+  }
+  .team {
+    width: 100%;
+    flex-direction: column;
+    margin: auto;
+  }
+  .team-btn {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .about-desc {
+    margin: 20px auto;
+  }
+  .about-line {
+    display: none;
+  }
+  .about-card {
+    margin-bottom: 20px;
+  }
+  .team-btn {
+    display: inline-block;
+  }
+  .team-box > div:hover .team-img-btn {
+    display: none;
+  }
+  .team-box > div:hover .team-box-img {
+    filter: brightness(1);
+  }
+  .about-modal {
+    max-width: 340px;
+    padding: 20px;
+  }
+}

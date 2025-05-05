@@ -1,0 +1,62 @@
+.modal-container {
+    /* width: 60%;
+    min-height: 100px;
+    margin: 0 auto;
+    margin-top: 100px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 25px;
+    box-sizing: border-box;
+    margin-bottom: 100px;
+    font-family: "Poppins", sans-serif !important; */
+    width: 60%;
+    border: 2px solid #01756c;
+    font-size: 16px;
+    font-style: italic;
+    margin: 100px 31px 31px 16px;
+    padding: 16px 24px;
+    position: relative;
+    box-shadow: 15px 15px 0 0 #01756c;
+    /* margin-top: 100px; */
+    /* text-align: center; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* margin: 0 auto; */
+}
+
+/* Styles for the quote text */
+/* .quote-text {
+    text-align: center;
+    /* font-weight: 600; */
+/* font-size: 20px;
+    line-height: 1.5;
+    font-style: italic;
+} */
+.author-attribution {
+    /* margin-top: 10px;
+    font-size: 16px;
+    text-align: right;
+    color: #666666; */
+    /* margin-top: 10px; */
+    color: #01756c;
+    font-size: 15px;
+    padding-top: 10px;
+    display: block;
+    text-align: right;
+    /* right: end; */
+}
+
+@media screen and (max-width: 806px) {
+    .result {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 706px) {
+    .result {
+        width: 85%;
+    }
+}
