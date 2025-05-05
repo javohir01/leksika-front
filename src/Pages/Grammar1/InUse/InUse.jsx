@@ -17,21 +17,8 @@ const GrammarInUse = () => {
       <div className="grammarContainer">
         <Unit id={id} />
         <YouTubePlayer 
-          videoId={link??'SbkuRmVaiT4'}
+          videoId={'SbkuRmVaiT4'}
         />
-        <div>
-          <iframe 
-            src="https://www.youtube.com/embed/SbkuRmVaiT4" 
-            title="YouTube video player"
-            className="video"
-            width="100%"
-            height="auto"
-            style={{ maxWidth: "100%", height: "600px", borderRadius: "18px" }}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
         <div className="quiz">
           <QuizTest quizID={id} />
         </div>

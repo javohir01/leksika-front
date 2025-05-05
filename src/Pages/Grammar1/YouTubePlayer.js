@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const YouTubePlayer = ({ videoId }) => {
+  console.log('videoId1',videoId);
+  
   return (
     <div className="video-container">
       <iframe
