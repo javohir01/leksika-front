@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/InUse.css";
 import "./style.css";
 import QuizTest from "../Quiz.js";
+import YouTubePlayer from "../YouTubePlayer.js";
 import { findFile } from "../../../lib/fetchData";
 
 const GrammarInUse = () => {
@@ -9,10 +10,15 @@ const GrammarInUse = () => {
   var query = window.location.href;
   var parts = query.split("/");
   var id = parts?.[parts.length - 1];
+  const link = parts?.[parts.length - 2];
 
   return (
     <div className="grammarItem">
       <div className="grammarContainer">
+        <Unit id={id} />
+        <YouTubePlayer 
+          videoId={link??'SbkuRmVaiT4'}
+        />
         <div>
           <iframe 
             src="https://www.youtube.com/embed/SbkuRmVaiT4" 
@@ -26,7 +32,6 @@ const GrammarInUse = () => {
             allowFullScreen
           />
         </div>
-        <Unit id={id} />
         <div className="quiz">
           <QuizTest quizID={id} />
         </div>
