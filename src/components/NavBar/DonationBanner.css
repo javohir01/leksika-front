@@ -1,13 +1,13 @@
 .donation-banner {
   position: fixed;
-  width: 400px;
+  width: 300px;
   right: 0;
   top: 72px;
   background: unset;
   padding: 12px 20px;
-  margin: 20px 0;
+  margin: 35px 0;
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .donation-link {
