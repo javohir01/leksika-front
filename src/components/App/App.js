@@ -6,7 +6,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { About } from "../../Pages/About/About";
+import { About } from "../../Pages/About/About.js";
 import Articles from "../../Pages/Articles/";
 import Article from "../../Pages/Articles/Article";
 import { NotFound } from "../../components/404/NotFound";

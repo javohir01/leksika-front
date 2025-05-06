@@ -96,7 +96,7 @@ export const About = () => {
           <div className="team">
             <section className="team-box">
               <div>
-                <img className="team-box-img" src={Dev} />
+                <img className="team-box-img" src={Dev} alt=""/>
                 <button
                   className="team-img-btn"
                   onClick={() => {
@@ -129,7 +129,7 @@ export const About = () => {
             </section>
             <section className="team-box">
               <div>
-                <img className="team-box-img" src={Designer} />
+                <img className="team-box-img" src={Designer} alt=""/>
                 <button
                   className="team-img-btn"
                   onClick={() => {
@@ -150,7 +150,7 @@ export const About = () => {
             </section>
             <section className="team-box">
               <div>
-                <img className="team-box-img" src={Dev2} />
+                <img className="team-box-img" src={Dev2} alt=""/>
                 <button
                   className="team-img-btn"
                   onClick={() => {

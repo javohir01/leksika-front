@@ -1,0 +1,6 @@
+Component.ad-container {
+    max-width: 100%; /* Don't exceed content width */
+    margin: 20px auto; /* Add spacing and center */
+    overflow: hidden; /* Prevent overflow */
+    text-align: center; /* Center align ads */
+  }

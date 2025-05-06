@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Homepage redirect -->
+    <url>
+        <loc>https://leksika.uz/en-uz</loc>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Static pages -->
+    <url>
+        <loc>https://leksika.uz/about</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://leksika.uz/articles</loc>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://leksika.uz/ru-uz</loc>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://leksika.uz/grammar</loc>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://leksika.uz/grammar1</loc>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Dynamic route examples (manually expand these with actual data) -->
+    <url>
+        <loc>https://leksika.uz/articles/search/example-search</loc>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://leksika.uz/articles/tag/example-tag</loc>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://leksika.uz/article/12345</loc>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://leksika.uz/grammar/intro</loc>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Authenticated route (optional to include) -->
+    <url>
+        <loc>https://leksika.uz/profile</loc>
+        <priority>0.5</priority>
+    </url>
+</urlset>
