@@ -10,14 +10,14 @@ const GrammarInUse = () => {
   var query = window.location.href;
   var parts = query.split("/");
   var id = parts?.[parts.length - 1];
-  const link = parts?.[parts.length - 2];
+  const [videoId, setVideoId] = useState('SbkuRmVaiT4');
 
   return (
     <div className="grammarItem">
       <div className="grammarContainer">
-        <Unit id={id} />
+        <Unit id={id} setVideoId={setVideoId} />
         <YouTubePlayer 
-          videoId={'SbkuRmVaiT4'}
+          videoId={videoId}
         />
         <div className="quiz">
           <QuizTest quizID={id} />
@@ -27,18 +27,21 @@ const GrammarInUse = () => {
   );
 };
 
-function Unit() {
+function Unit({ id, setVideoId }) {
   var query = window.location.href;
   var parts = query.split("/");
   var id = parts[parts.length - 1];
+  const video =''
   const [html, setHtml] = useState("");
   useEffect(() => {
     async function getFile() {
       const data = await findFile(id);
       setHtml(await data.body);
-    }
+      if (data.video) {
+        setVideoId(data.video);
+      }    }
     getFile();
-  }, [id]);
+  }, [id, setVideoId]);
 
   return <div dangerouslySetInnerHTML={{ __html: html }}></div>;
 }
