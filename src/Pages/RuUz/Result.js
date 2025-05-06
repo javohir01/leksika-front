@@ -22,7 +22,7 @@ export function NotFoundRu() {
         >
           If you believe there is such a word in the language of <br />
           Shakespeare, please take a few seconds to report it via <br />
-          <a href="https://t.me/+998907163366">Telegram</a> or
+          <a href="https://t.me/+998507533366">Telegram</a> or
           <a href="mailto:akbarbankir@gmail.com">Gmail</a> and we will add it
           asap!
         </div>
