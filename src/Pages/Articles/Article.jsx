@@ -73,7 +73,7 @@ const Article = () => {
               </p>
             </div>
             <div className="about-unit-sm">
-              <a href="https://t.me/AsqarArslonov">
+              <a href="https://t.me/LeksikaUZ">
                 <TbBrandTelegram />
               </a>
               <a href="https://www.facebook.com/people/LeksikaUZ/100086569411918/">

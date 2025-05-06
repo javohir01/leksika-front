@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { TbArrowsExchange } from "react-icons/tb";
 import Footer from "../Footer/Footer";
+import DonationBanner from '../NavBar/DonationBanner';
 import "./NavBar.css";
 import "./background.css";
 import { useDispatch } from "react-redux";
@@ -200,6 +201,7 @@ function NavBar() {
             </div>
             {click && <Footer />}
           </ul>
+          <DonationBanner />
           <div className="nav-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>

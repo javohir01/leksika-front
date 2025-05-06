@@ -19,7 +19,7 @@ function Footer() {
             <a href="https://leksika.uz/PrivacyPolicy.html">Privacy Policy</a>
           </li>
           <li>
-            <a href="https://t.me/AsqarArslonov">
+            <a href="https://t.me/LeksikaUZ">
               <TbBrandTelegram />
             </a>
           </li>
