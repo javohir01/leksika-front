@@ -1,50 +1,45 @@
-import React, { useState } from 'react';
-import { Modal } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
 import './DonationBanner.css';
 import QR_code from "./QR_code.jpg";
 
 const DonationBanner = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [adjustBottom, setAdjustBottom] = useState(false);
+  const bannerRef = useRef(null);
+
+  useEffect(() => {
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setAdjustBottom(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <>
-      <div className="donation-banner">
-        <p className="donation-text">
-          Leksika.uz - notijorat loyihadir. Uni qo'llab-quvvatlash va rivojlantirishga{' '}
-          <span 
-            className="donation-link"
-            onClick={() => setIsModalOpen(true)}
-          >
-            o'z hissangizni qo'shing
-          </span>{' '}
-          - har bir donat biz uchun muhim!
-        </p>
+    <div
+      ref={bannerRef}
+      className="floating-donation"
+      style={{ bottom: adjustBottom ? '120px' : '30px' }}
+    >
+      <div className="donation-box">
+        <p>Biz bilan bilim ulashing — hissa qo‘shing:</p>
+        <img src={QR_code} alt="QR Code" />
+        <a 
+          href="https://my.click.uz/clickp2p/DD2B79E46658AE8F842AD72B13A5BC791B024B5760CB7D6743F63D44A46122A8" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="donation-button"
+        >
+          Donat qilish
+        </a>
       </div>
-
-      <Modal
-        title="Loyihani qo'llab-quvvatlash"
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        footer={null}
-      >
-        <div className="donation-content">
-          <p>QR-kod yoki quyidagi havola orqali loyihamizni qo'llab-quvvatlang!</p>
-          
-          <div className="payment-methods">
-            <img src={QR_code} alt="Payment QR Code" />
-            <div className="payment-links">
-              <a 
-                href="https://my.click.uz/clickp2p/DD2B79E46658AE8F842AD72B13A5BC791B024B5760CB7D6743F63D44A46122A8" 
-                target='_blank'
-                className="payment-button"
-              >
-                  Qo'llab quvvatlash
-              </a>
-            </div>
-          </div>
-        </div>
-      </Modal>
-    </>
+    </div>
   );
 };
 
