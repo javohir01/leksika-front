@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
 import './DonationBanner.css';
-import QR_code from "./QR_code.png";
+import QR_code from "./QR_code.jpg";
 
 const DonationBanner = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +33,13 @@ const DonationBanner = () => {
           <div className="payment-methods">
             <img src={QR_code} alt="Payment QR Code" />
             <div className="payment-links">
-              <a href="#" className="payment-button">Qo'llab quvvatlash</a>
+              <a 
+                href="https://my.click.uz/clickp2p/DD2B79E46658AE8F842AD72B13A5BC791B024B5760CB7D6743F63D44A46122A8" 
+                target='_blank'
+                className="payment-button"
+              >
+                  Qo'llab quvvatlash
+              </a>
             </div>
           </div>
         </div>
