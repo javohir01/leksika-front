@@ -144,7 +144,7 @@ function ResulComponent(props) {
             // Replace with link
             processedHTML = processedHTML.replace(
               regex, 
-              `<a href="/en-uz?s=${word}&lang=${targetLang}" target="_blank">${word}</a>`
+              `<a href="/en-uz?s=${word}&lang=${targetLang}">${word}</a>`
             );
           }
         }

@@ -26,6 +26,7 @@
 .donation-content img {
   width: 100%;
   margin: 12px 0;
+  padding: 10px;
 }
 
 .payment-button {
@@ -36,4 +37,8 @@
   text-decoration: none;
   display: inline-block;
   margin-top: 8px;
+}
+.payment-links {
+  display: flex;
+  justify-content: center;
 }

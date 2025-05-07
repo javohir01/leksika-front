@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./About.css";
 import { AiOutlineClose } from "react-icons/ai";
 
-import Designer from "../../static/Lola_Arslanova.jpg";
-import Dev2 from "../../static/Kamol_Dev.jpg";
+import Autor from "../../static/autor.jpg";
 import Dev from "../../static/dev.jpeg";
 export const About = () => {
   const [showModal, setShowModal] = useState({
@@ -17,75 +16,77 @@ export const About = () => {
       <div className="about-container">
         <div className="about-desc">
           <p style={{ lineHeight: "32px" }}>
-            Remember the days when you couldn't find the proper translation of an English word to Uzbek? We also know the feeling of not having any general use dictionaries, let alone specialized ones. And without online resources in Uzbek, knowing Russian was a prerequisite for indirect translation (EN  RU  UZ and vice versa).
+            Remember the days when finding a proper English-to-Uzbek translation felt nearly impossible? We do too. For years, general-use bilingual dictionaries—let alone specialized ones—were hard to come by. And with so few online resources available in Uzbek, many had no choice but to rely on Russian as a bridge language, translating indirectly (English → Russian → Uzbek, and vice versa).
           </p>
         </div>
         <hr className="about-line" />
 
         <div className="about-card">
-          <h3>Book edition</h3>
+          <h3>The Print Edition</h3>
           <div className="about-card-content">
             <p>
-              To reverse the situation, it was decided to compile a large
-              English-Uzbek-English dictionary and the work started back in
-              2003. 2 years later, the{" "}
-              <a href="https://www.worldcat.org/title/70168096">
-                first edition
+              To change this, work on a comprehensive English–Uzbek–English dictionary began in 2003. Just two years later, the {" "}
+              <a href="https://search.worldcat.org/title/70168096">
+                first edition 
               </a>{" "}
-              of the bilingual dictionary was published in G’afur G’ulom
-              publishing house; it is still{" "}
+              was published by{" "}<i>Gʻafur Gʻulom Publishing House</i>, and it's still{" "} 
               <a href="https://asaxiy.uz/product/akbar-kholmurodov-ravshan-azizov-english-uzbek-uzbek-english-dictionary-tamaddun-nashriyot">
-                available
-              </a>
-              for sale online. Much attention was directed to the Uzbek-English part, and even now, it is the most comprehensive and complete Uzbek-English dictionary available.
+                available 
+              </a>{" "}for purchase online.<br />
+              Special effort was put into the Uzbek–English section, which remains the most complete and reliable resource of its kind to this day.<br />
             </p>
-
             <p>
-              A{" "}
-              <a href="https://play.google.com/store/apps/details?id=com.hy.enguzb.dictionary&hl=en&gl=US">
-                mobile app
-              </a>{" "}
-              for Android devices was launched based on the dictionary with
-              major update of the lexical database.
+              Later, a mobile app for Android was released, based on the same dictionary, with major updates to the lexical database.
             </p>
           </div>
         </div>
 
         <div className="about-card">
-          <h3>Website dictionary </h3>
+          <h3>Leksika.uz — The Online Dictionary</h3>
           <div className="about-card-content">
             <p>
-              However, we still desperately needed a high-quality online dictionary for the English-Uzbek language pair that could cover both everyday and area-specific vocabulary. In September 2022, on the 31st anniversary of Uzbekistan's independence, Leksika.uz was successfully launched. As of September 2023, the database contains over 250,000 entries with real-life example sentences of word usage.
+              Despite these milestones, there was still a strong need for a {" "}<b>high-quality online dictionary</b>{" "} <br />
+              covering both everyday and specialized vocabulary. That vision became a reality in {" "}<b>September 2022,{" "}</b>
+               on the 31st anniversary of Uzbekistan’s independence, with the launch of {" "}<b>Leksika.uz</b>{" "}.   
             </p>
 
             <p>
-              <i>Leksika.uz</i> has been designed to give English learners of any level the help they need to read, speak and write English more effectively. It is also intended to assist translators and localization specialists by providing useful tips and rules of thumb; these can be found in the Articles section.
+              As of {" "}<b>September 2023</b>, our dictionary contains over {" "}<b>250,000 entries</b>, 
+              including real-life example sentences to show words in context.            
             </p>
+            <p>
+              Leksika.uz is designed to help {" "}<b>learners of all levels</b>{" "} improve their English reading,
+              writing, and speaking skills. It’s also an essential tool for {" "}<b>translators and 
+              localization specialists,</b> with tips and best practices available in the {" "}<b>Articles</b>{" "} section.
+            </p>
+            
           </div>
         </div>
 
         <div className="about-card">
-          <h3>What has already been added:</h3>
+          <h3>What You'll Find on Leksika.uz</h3>
           <div className="about-card-content">
             <ul style={{ lineHeight: "25px", fontFamily: "Roboto" }}>
-              <li>
-                Russian-Uzbek-Russian dictionary section with largest database
-                on the web;
-              </li>
-              <li>
-                
-                Articles with content for:
-             <ul>
-              <li>useful tips and motivational articles for freelancers;</li>
-              <li>
-                articles for localizers to Uzbek language, including intricacies
-                of Uzbek grammar;
-              </li>
-                <li>easier learning of English, including grammar, writing tips, and learning new words.</li>
-                </ul>
-              </li>
-              
+              <li>The {" "}<b>largest English–Uzbek–English dictionary</b>{" "} available online</li>
+              <li>A {" "}<b>Russian–Uzbek–Russian section</b>{" "} with the most extensive database on the web</li>
+              <li>A {" "}<b>Grammar section</b>{" "} with 136 detailed lessons, each paired with video explanations</li>
+              <li>Articles with {" "}<b>English learning tips, freelancing advice,</b> and {" "}<b>motivational content</b></li>
+              <li>A dedicated {" "}<b>
+              <a href="https://play.google.com/store/apps/details?id=uz.leksika.app">
+                Android app
+              </a></b>{" "} to access the dictionary on the go</li>
             </ul>
+          </div>
+        </div>
+        <div className="about-card">
+          <h3>Support Our Mission</h3>
+          <div className="about-card-content">
+            <p><b>Leksika.uz is a non-profit project.</b></p>
+            <p>Your support helps us grow and improve. Every contribution makes a difference.</p>
+            <p><b>You can help us {" "}
+            <a href="https://my.click.uz/clickp2p/DD2B79E46658AE8F842AD72B13A5BC791B024B5760CB7D6743F63D44A46122A8">
+              here.
+            </a></b></p>
           </div>
         </div>
 
@@ -129,13 +130,13 @@ export const About = () => {
             </section>
             <section className="team-box">
               <div>
-                <img className="team-box-img" src={Designer} alt=""/>
+                <img className="team-box-img" src={Autor} alt=""/>
                 <button
                   className="team-img-btn"
                   onClick={() => {
                     setShowModal({
                       open: true,
-                      title: "Lola Arslanova",
+                      title: "Akbar Xolmuradov",
                       text: "Lola has been crazy about web design since her first self-study classes on YouTube. As you have guessed, her hobby is drawing. Being now a student at the University of World Economy and Diplomacy, Lola is sure she will be able to make economics more beautiful through art.",
                     });
                   }}
@@ -144,30 +145,9 @@ export const About = () => {
                 </button>
               </div>
 
-              <h4>Lola Arslanova</h4>
+              <h4>Akbar Xolmuradov</h4>
               <hr />
-              <p>UI/UX Designer</p>
-            </section>
-            <section className="team-box">
-              <div>
-                <img className="team-box-img" src={Dev2} alt=""/>
-                <button
-                  className="team-img-btn"
-                  onClick={() => {
-                    setShowModal({
-                      open: true,
-                      title: "Kamollidin Nuriddinov",
-                      text: "Kamoliddin started taking his front-end cources when he was 11. Since then he has developed some simple projects, joining later our Leksika team. He has helped a lot with the front-end part of the project and become a critical part of the team.",
-                    });
-                  }}
-                >
-                  Read more
-                </button>
-              </div>
-
-              <h4>Kamoliddin Nuriddinov</h4>
-              <hr />
-              <p>Front-end developer</p>
+              <p>Localization and translation expert</p>
             </section>
           </div>
           {showModal.open && (
