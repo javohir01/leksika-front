@@ -9,7 +9,7 @@ const DonationBanner = () => {
   return (
     <>
       <div className="donation-banner">
-        <p>
+        <p className="donation-text">
           Leksika.uz - notijorat loyihadir. Uni qo'llab-quvvatlash va rivojlantirishga{' '}
           <span 
             className="donation-link"
@@ -28,12 +28,12 @@ const DonationBanner = () => {
         footer={null}
       >
         <div className="donation-content">
-          <p>Qr code orqali yoki quyidagi linkni bosish orqali loyihamizni qo'llab-quvvatlang!</p>
+          <p>QR-kod yoki quyidagi havola orqali loyihamizni qo'llab-quvvatlang!</p>
           
           <div className="payment-methods">
             <img src={QR_code} alt="Payment QR Code" />
             <div className="payment-links">
-              <a href="#" className="payment-button">Click</a>
+              <a href="#" className="payment-button">Qo'llab quvvatlash</a>
             </div>
           </div>
         </div>
