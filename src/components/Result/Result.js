@@ -18,6 +18,9 @@ import {
 import { useAuthUser } from "react-auth-kit";
 import axios from "axios";
 
+// Cache for word existence checks to avoid redundant API calls
+const wordExistenceCache = {};
+
 function Result(props) {
   const [none, setNone] = useState(false);
   const [data, setData] = useState([]);
@@ -69,7 +72,6 @@ function ResulComponent(props) {
     msg.voice = speechSynthesis.getVoices().filter(function (voice) {
       return voice.lang === "en-US";
     })[0];
-    // now say it like you mean it:
     speechSynthesis.speak(msg);
   };
 
@@ -83,44 +85,71 @@ function ResulComponent(props) {
       }
 
       try {
-          const description = props.data.description;
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = description;
-          const textContent = tempDiv.textContent || tempDiv.innerText;
-          const wordRegex = /\b([a-zA-Z]+)\b/g;
-          const words = textContent.match(wordRegex) || [];
-          const uniqueWords = [...new Set(words)];
-          const wordExistsMap = {};
-          const batchSize = 5;
-          for (let i = 0; i < uniqueWords.length; i += batchSize) {
-            const batch = uniqueWords.slice(i, i + batchSize);
-            const promises = batch.map(word => checkWordExists(word));
-            const results = await Promise.all(promises);
-            
-            batch.forEach((word, index) => {
-              wordExistsMap[word] = results[index];
-            });
-          }
-          let processedHTML = description;
-          const sortedWords = uniqueWords.sort((a, b) => b.length - a.length);
-          for (const word of sortedWords) {
-            if (wordExistsMap[word]) {
-              const regex = new RegExp(`\\b${word}\\b`, 'g');
-              if (props.lang === "English-Uzbek") {
-                processedHTML = processedHTML.replace(
-                  regex, 
-                  `<a href="http://localhost:3000/en-uz?s=${word}&lang=Uzbek-English" target="_blank">${word}</a>`
-                );
-              } else if (props.lang === "Uzbek-English") {
-                processedHTML = processedHTML.replace(
-                  regex, 
-                  `<a href="http://localhost:3000/en-uz?s=${word}&lang=English-Uzbek" target="_blank">${word}</a>`
-                );
-              }
-            }
-          }          
-          setProcessedDescription(processedHTML);
+        const description = props.data.description;
         
+        // Extract words after numbered points and comma-separated lists
+        const numberedPointsRegex = /(\d+\))\s*([a-zA-Z]+(?:,\s*[a-zA-Z]+)*)/g;
+        const matches = [...description.matchAll(numberedPointsRegex)];
+        
+        if (matches.length === 0) {
+          // No numbered points found, return original description
+          setProcessedDescription(description);
+          setIsProcessing(false);
+          return;
+        }
+        
+        // Extract all words to check
+        const wordsToCheck = [];
+        matches.forEach(match => {
+          const wordList = match[2].split(/,\s*/); // Split by comma and optional whitespace
+          wordList.forEach(word => {
+            if (word.trim().length > 1) {
+              wordsToCheck.push(word.trim());
+            }
+          });
+        });
+        
+        // Remove duplicates
+        const uniqueWords = [...new Set(wordsToCheck)];
+        
+        // Check which words exist in the API
+        const wordExistsMap = {};
+        for (const word of uniqueWords) {
+          // Check if word is already in cache
+          const cacheKey = `${props.lang}-${word.toLowerCase()}`;
+          if (wordExistenceCache[cacheKey] !== undefined) {
+            wordExistsMap[word] = wordExistenceCache[cacheKey];
+          } else {
+            // Check API and cache result
+            const exists = await checkWordExists(word);
+            wordExistenceCache[cacheKey] = exists;
+            wordExistsMap[word] = exists;
+          }
+        }
+        
+        // Process the HTML to add links
+        let processedHTML = description;
+        
+        // Sort words by length (descending) to avoid replacing parts of longer words
+        const sortedWords = uniqueWords.sort((a, b) => b.length - a.length);
+        
+        for (const word of sortedWords) {
+          if (wordExistsMap[word]) {
+            // Create a regex that matches the word as a whole word
+            const regex = new RegExp(`\\b${word}\\b`, 'g');
+            
+            // Determine target language for the link
+            const targetLang = props.lang === "English-Uzbek" ? "Uzbek-English" : "English-Uzbek";
+            
+            // Replace with link
+            processedHTML = processedHTML.replace(
+              regex, 
+              `<a href="/en-uz?s=${word}&lang=${targetLang}" target="_blank">${word}</a>`
+            );
+          }
+        }
+        
+        setProcessedDescription(processedHTML);
       } catch (error) {
         console.error("Error processing description:", error);
         setProcessedDescription(props.data.description);
@@ -196,6 +225,7 @@ function ResulComponent(props) {
     </div>
   );
 }
+
 const styleClass = {
   lineHeight: "50px",
   fontSize: "20px",
@@ -203,6 +233,7 @@ const styleClass = {
   marginTop: "24px",
   fontStyle: "italic",
 };
+
 function NotFoundEngUzb() {
   return (
     <div className={classes.result404}>
@@ -230,6 +261,7 @@ function NotFoundEngUzb() {
     </div>
   );
 }
+
 function NotFoundUzbEng() {
   return (
     <div className={classes.result404}>
