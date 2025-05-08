@@ -137,7 +137,8 @@ export const About = () => {
                     setShowModal({
                       open: true,
                       title: "Akbar Xolmuradov",
-                      text: "Lola has been crazy about web design since her first self-study classes on YouTube. As you have guessed, her hobby is drawing. Being now a student at the University of World Economy and Diplomacy, Lola is sure she will be able to make economics more beautiful through art.",
+                      text: "An alumnus of the University of World Economy and Diplomacy, Akbar Xolmuradov has established himself as a translation and localization expert. He served as a contractor at a FAANG company, where he led a multinational team of Knowledge Graph analysts. He is currently the founder and content lead at" + 
+                      <a href="https://leksika.uz" >Leksika.uz.</a> + "",
                     });
                   }}
                 >
@@ -147,7 +148,7 @@ export const About = () => {
 
               <h4>Akbar Xolmuradov</h4>
               <hr />
-              <p>Localization and translation expert</p>
+              <p>Founder of {' '}<a href="https://leksika.uz" >Leksika.uz.</a>{' '} Localization and translation expert.</p>
             </section>
           </div>
           {showModal.open && (
