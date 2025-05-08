@@ -137,18 +137,17 @@ export const About = () => {
                     setShowModal({
                       open: true,
                       title: "Akbar Xolmuradov",
-                      text: "An alumnus of the University of World Economy and Diplomacy, Akbar Xolmuradov has established himself as a translation and localization expert. He served as a contractor at a FAANG company, where he led a multinational team of Knowledge Graph analysts. He is currently the founder and content lead at" + 
-                      <a href="https://leksika.uz" >Leksika.uz.</a> + "",
+                      text: "An alumnus of the University of World Economy and Diplomacy, Akbar Xolmuradov has established himself as a translation and localization expert. He served as a contractor at a FAANG company, where he led a multinational team of Knowledge Graph analysts. He is currently the founder and content lead at Leksika.uz.",
                     });
                   }}
                 >
-                  Read more
+                  Read more 
                 </button>
               </div>
 
               <h4>Akbar Xolmuradov</h4>
               <hr />
-              <p>Founder of {' '}<a href="https://leksika.uz" >Leksika.uz.</a>{' '} Localization and translation expert.</p>
+              <p>Localization and translation expert.</p>
             </section>
           </div>
           {showModal.open && (
