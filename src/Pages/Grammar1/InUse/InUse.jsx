@@ -16,10 +16,12 @@ const GrammarInUse = () => {
     <div className="grammarItem">
       <div className="grammarContainer">
         <Unit id={id} setVideoId={setVideoId} />
-        <YouTubePlayer 
-          videoId={videoId}
-        />
-        <div className="quiz">
+        <div className="video-wrapper">
+          <YouTubePlayer 
+            videoId={videoId}
+          />
+        </div>
+        <div className="quiz" id='quiz-section'>
           <QuizTest quizID={id} />
         </div>
       </div>

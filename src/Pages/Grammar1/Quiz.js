@@ -44,12 +44,38 @@ function QuizTest() {
     }
   }, [quiz]);
 
+  const customRender = (obj) => {
+    const handleAnswerClick = (e) => {
+      e.preventDefault();
+      if (e.target.tagName === 'BUTTON') {
+        // Prevent default scroll behavior
+        setTimeout(() => {
+          const quizElement = document.querySelector('.quiz');
+          if (quizElement) {
+            quizElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 100);
+      }
+    };
+
+    return (
+      <div onClick={handleAnswerClick}>
+        <Quiz 
+          quiz={quiz}
+          showDefaultResult={false}
+          onComplete={(obj) => {
+            // Prevent scroll on complete
+            return false;
+          }}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="quiz-start">
-        {/* {quiz.length && showPrompt && console.log(quiz[0] )} */}
-        {showPrompt && console.log(quiz, 1)}
-        {showPrompt && <Quiz quiz={quiz} />}
+        {showPrompt && customRender(quiz)}
       </div>
     </>
   );

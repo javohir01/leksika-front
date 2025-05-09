@@ -10,7 +10,7 @@ const YouTubePlayer = ({ videoId }) => {
         src={`https://www.youtube.com/embed/${videoId}`}
         className="video"
         width="100%"
-        height="600"
+        // height="600"
         style={{
           maxWidth: "100%",
           borderRadius: "18px"
