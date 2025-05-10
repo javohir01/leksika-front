@@ -28,6 +28,20 @@ import WikiQuote from "../QuoteOfDay/WikiQuote.js";
 function App() {
   const auth = useAuthUser()();
   const client = new QueryClient();
+
+  // Load AdSense script on mount
+  useEffect(() => {
+    const loadAdSenseScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8555908314454713";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      document.head.appendChild(script);
+    };
+
+    loadAdSenseScript();
+  }, []);
+
   useEffect(() => {
     async function fetchMyAPI() {
       let response = await readEngUzb();
@@ -52,32 +66,45 @@ function App() {
               <Route path="/en-uz">
                 <Search />
                 <WikiQuote/>
+                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/about">
                 <About />
+                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/articles">
                 <Articles />
+                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/articles/search/:text">
                 <Articles />
+                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/articles/tag/:tag">
                 <Articles />
+                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/article/:id">
                 <Article />
+                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
-
               <Route path="/ru-uz" component={Search1} />
               {auth && <Route path="/profile" component={Profile} />}
-              <Route path="/grammar/:id" component={GrammarInUse} />
-              <Route path="/grammar" component={Grammar} />
-              <Route path="/grammar1" component={GrammarInUse} />
+              <Route path="/grammar/:id">
+                <GrammarInUse />
+                <AdsComponent /> {/* Ad placement within each route */}
+              </Route>
+              <Route path="/grammar">
+                <Grammar />
+                <AdsComponent /> {/* Ad placement within each route */}
+              </Route>
+              <Route path="/grammar1">
+                <GrammarInUse />
+                <AdsComponent /> {/* Ad placement within each route */}
+              </Route>
               <Route path="*" component={NotFound} />
             </Switch>
           </main>
-          <AdsComponent />
           <Footer />
         </Router>
       </div>

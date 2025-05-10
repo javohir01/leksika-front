@@ -1,7 +1,10 @@
-Component.ad-container {
-    max-width: 100%; /* Don't exceed content width */
-    width: 100%; /* Full width for ads */
-    margin: 20px auto; /* Add spacing and center */
-    overflow: hidden; /* Prevent overflow */
-    text-align: center; /* Center align ads */
-  }
+
+.adsense-container {
+  max-width: 100%; /* Don't exceed content width */
+  margin: 20px auto; /* Add spacing and center */
+  overflow: hidden; /* Prevent overflow */
+  text-align: center; /* Center align ads */
+  position: relative; /* Ensure proper positioning */
+  clear: both; /* Avoid floating elements */
+  min-height: 90px; /* Minimum space for ad */
+}
