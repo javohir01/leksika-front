@@ -31,15 +31,18 @@ function App() {
 
   // Load AdSense script on mount
   useEffect(() => {
-    const loadAdSenseScript = () => {
-      const script = document.createElement("script");
-      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8555908314454713";
-      script.async = true;
-      script.crossOrigin = "anonymous";
-      document.head.appendChild(script);
-    };
-
-    loadAdSenseScript();
+    // Only load the script if it's not already loaded
+    if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
+      const loadAdSenseScript = () => {
+        const script = document.createElement("script");
+        script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8555908314454713";
+        script.async = true;
+        script.crossOrigin = "anonymous";
+        document.head.appendChild(script);
+      };
+      
+      loadAdSenseScript();
+    }
   }, []);
 
   useEffect(() => {
@@ -66,44 +69,37 @@ function App() {
               <Route path="/en-uz">
                 <Search />
                 <WikiQuote/>
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/about">
                 <About />
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/articles">
                 <Articles />
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/articles/search/:text">
                 <Articles />
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/articles/tag/:tag">
                 <Articles />
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/article/:id">
                 <Article />
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/ru-uz" component={Search1} />
               {auth && <Route path="/profile" component={Profile} />}
               <Route path="/grammar/:id">
                 <GrammarInUse />
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/grammar">
                 <Grammar />
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="/grammar1">
                 <GrammarInUse />
-                <AdsComponent /> {/* Ad placement within each route */}
               </Route>
               <Route path="*" component={NotFound} />
             </Switch>
+            {/* Single ad placement outside of route components */}
+            <AdsComponent />
           </main>
           <Footer />
         </Router>

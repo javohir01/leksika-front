@@ -1,20 +1,33 @@
-// adsense.js - Fixed Component
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './adsComponent.css';
 
 const AdsComponent = (props) => {
+  const adRef = useRef(null);
+  const adLoaded = useRef(false);
+
   useEffect(() => {
-    try {
-      // Load ads after component mounts
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.error('AdSense error:', e);
+    // Only try to load ads if this specific instance hasn't had an ad loaded yet
+    if (adRef.current && !adLoaded.current) {
+      try {
+        // Load ads after component mounts
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        adLoaded.current = true;
+      } catch (e) {
+        console.error('AdSense error:', e);
+      }
     }
+    
+    // Cleanup function to prevent memory leaks
+    return () => {
+      adLoaded.current = false;
+    };
   }, []);
 
   return (
     <div className="adsense-container">
-      <ins className="adsbygoogle"
+      <ins 
+        ref={adRef}
+        className="adsbygoogle"
         style={{ display: "block" }}
         data-ad-client="ca-pub-8555908314454713"
         data-ad-slot="6110794033"
@@ -26,4 +39,3 @@ const AdsComponent = (props) => {
 };
 
 export default AdsComponent;
-
