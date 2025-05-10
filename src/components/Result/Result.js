@@ -78,69 +78,105 @@ function ResulComponent(props) {
         return
       }
 
-      try {
+      try {          
         const description = props.data.description
-
-        // So'zlarni aniqlash uchun yangilangan regexlar
-        const numberedPointsRegex = /(\d+\))\s*([\w’‘`']+(?:,\s*[\w’‘`']+)*)/g
-        const italicTagsRegex = /<i>[^<]+<\/i>(?:\s*<br>\s*|\s*)([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
-        const afterItalicWithBrRegex = /<i>[^<]+<\/i>\s*<br>\s*([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
-        const semicolonSeparatedRegex = /;\s*([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
-        const paragraphTagsRegex = /<p>(?:<em>[^<]+<\/em>)?\s*([a-zA-Z''ʼ'`]+(?:\s*[a-zA-Z''ʼ'`]+)*)/g
-
-        // Barcha mos keluvchi so'zlarni yig'ish
         const wordsToCheck = []
 
-        // 1. Raqamli nuqtalar (numbered points)
-        const numberedMatches = [...description.matchAll(numberedPointsRegex)]
-        numberedMatches.forEach((match) => {
-          const wordList = match[2].split(/,\s*/)
-          wordList.forEach((word) => {
-            if (word.trim().length > 1) {
-              wordsToCheck.push(word.trim())
+        if(props.lang === "English-Uzbek") {
+          // So'zlarni aniqlash uchun yangilangan regexlar
+          const numberedPointsRegex = /(\d+\))\s*([\w’‘`']+(?:,\s*[\w’‘`']+)*)/g
+          const italicTagsRegex = /<i>[^<]+<\/i>(?:\s*<br>\s*|\s*)([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
+          const afterItalicWithBrRegex = /<i>[^<]+<\/i>\s*<br>\s*([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
+          const semicolonSeparatedRegex = /;\s*([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
+          const paragraphTagsRegex = /<p>(?:<em>[^<]+<\/em>)?\s*([a-zA-Z''ʼ'`]+(?:\s*[a-zA-Z''ʼ'`]+)*)/g
+
+          // 1. Raqamli nuqtalar (numbered points)
+          const numberedMatches = [...description.matchAll(numberedPointsRegex)]
+          numberedMatches.forEach((match) => {
+            const wordList = match[2].split(/,\s*/)
+            wordList.forEach((word) => {
+              if (word.trim().length > 1) {
+                wordsToCheck.push(word.trim())
+              }
+            })
+          })
+
+          // 2. <i> teglaridan keyin keladigan so'zlar
+          const italicMatches = [...description.matchAll(italicTagsRegex)]
+          italicMatches.forEach((match) => {
+            const word = match[1].trim()
+            if (word.length > 1) {
+              wordsToCheck.push(word)
             }
           })
-        })
 
-        // 2. <i> teglaridan keyin keladigan so'zlar
-        const italicMatches = [...description.matchAll(italicTagsRegex)]
-        italicMatches.forEach((match) => {
-          const word = match[1].trim()
-          if (word.length > 1) {
-            wordsToCheck.push(word)
-          }
-        })
-
-        // 3. <i> tegidan keyin <br> bo'lgan holat
-        const afterItalicBrMatches = [...description.matchAll(afterItalicWithBrRegex)]
-        afterItalicBrMatches.forEach((match) => {
-          const word = match[1].trim()
-          if (word.length > 1) {
-            wordsToCheck.push(word)
-          }
-        })
-
-        // 4. Verguldan keyin keladigan so'zlar
-        const semicolonMatches = [...description.matchAll(semicolonSeparatedRegex)]
-        semicolonMatches.forEach((match) => {
-          const word = match[1].trim()
-          if (word.length > 1) {
-            wordsToCheck.push(word)
-          }
-        })
-
-        // 5. <p> teglaridagi so'zlar (yangi format)
-        const paragraphMatches = [...description.matchAll(paragraphTagsRegex)]
-        paragraphMatches.forEach((match) => {
-          const wordList = match[1].split(/\s+|,\s*/)
-          wordList.forEach((word) => {
-            const cleanWord = word.trim().replace(/[()]/g, "") // Qavslar ichidagi matnni olib tashlash
-            if (cleanWord.length > 1) {
-              wordsToCheck.push(cleanWord)
+          // 3. <i> tegidan keyin <br> bo'lgan holat
+          const afterItalicBrMatches = [...description.matchAll(afterItalicWithBrRegex)]
+          afterItalicBrMatches.forEach((match) => {
+            const word = match[1].trim()
+            if (word.length > 1) {
+              wordsToCheck.push(word)
             }
           })
-        })
 
+          // 4. Verguldan keyin keladigan so'zlar
+          const semicolonMatches = [...description.matchAll(semicolonSeparatedRegex)]
+          semicolonMatches.forEach((match) => {
+            const word = match[1].trim()
+            if (word.length > 1) {
+              wordsToCheck.push(word)
+            }
+          })
+            // 5. <p> teglaridagi so'zlar (yangi format)
+          const paragraphMatches = [...description.matchAll(paragraphTagsRegex)]
+          paragraphMatches.forEach((match) => {
+            const wordList = match[1].split(/\s+|,\s*/)
+            wordList.forEach((word) => {
+              const cleanWord = word.trim().replace(/[()]/g, "") // Qavslar ichidagi matnni olib tashlash
+              if (cleanWord.length > 1) {
+                wordsToCheck.push(cleanWord)
+              }
+            })
+          }) 
+        } else {
+          const numberedPointsRegex = /(\d+\))\s*([\w’‘`']+(?:,\s*[\w’‘`']+)*)/g
+          // const firstLineSemicolonRegex = /^([^;]+(?:;\s*[^;]+)*)/
+          const firstLineSingleWordRegex = /^([a-zA-Z''ʼ'`]+(?:\s+[a-zA-Z''ʼ'`]+)*)/
+
+          // 1. Numbered translations (e.g., 1) book, 2) notebook)
+          const numberedMatches = [...description.matchAll(numberedPointsRegex)]
+          numberedMatches.forEach((match) => {
+            const wordList = match[2].split(/,\s*/)
+            wordList.forEach((word) => {
+              if (word.trim().length > 1) {
+                wordsToCheck.push(word.trim())
+              }
+            })
+          })
+
+          // 2. First line with semicolon-separated translations (e.g., dictionary; glossary; vocabulary)
+          // const firstLineMatch = description.match(firstLineSemicolonRegex)
+          // if (firstLineMatch) {
+          //   const firstLineWords = firstLineMatch[1].split(/;\s*/)
+          //   firstLineWords.forEach((word) => {
+          //     const cleanWord = word.trim().replace(/[<][^>]*[>]/g, "") // Remove any HTML tags
+          //     if (cleanWord.length > 1) {
+          //       wordsToCheck.push(cleanWord)
+          //     }
+          //   })
+          // }
+
+          // 3. Single word/phrase on the first line (e.g., notebook)
+          // if (!firstLineMatch) {
+            const singleWordMatch = description.match(firstLineSingleWordRegex)
+            if (singleWordMatch) {
+              const cleanWord = singleWordMatch[1].trim().replace(/[<][^>]*[>]/g, "") // Remove any HTML tags
+              if (cleanWord.length > 1) {
+                wordsToCheck.push(cleanWord)
+              }
+            }
+          // }
+        }
         console.log("wordsToCheck", wordsToCheck)
 
         // So'zlar topilmagan bo'lsa, original matnni qaytarish
@@ -174,14 +210,14 @@ function ResulComponent(props) {
           if (wordExistsMap[word]) {
             const regex = new RegExp(
               `((?<!</?[a-z]+[^>]*>)|(?<=</[a-z]+>))\\b${word.replace(/'/g, "[''`]?")}\\b(?![^<]*>|[^<]*</a>)`,
-              "g",
+              "g"
             )
             const targetLang = props.lang === "English-Uzbek" ? "Uzbek-English" : "English-Uzbek"
+            const routePrefix = "/en-uz"
             processedHTML = processedHTML.replace(
               regex,
-              `<a href="/en-uz?s=${word}&lang=${targetLang}">${word}</a>`
+              `<a href="${routePrefix}?s=${encodeURIComponent(word)}&lang=${targetLang}">${word}</a>`
             )
-            console.log('regex',regex, processedHTML)
           }
         }
 

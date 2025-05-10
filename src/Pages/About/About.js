@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./About.css";
 import { AiOutlineClose } from "react-icons/ai";
+import DonationModal from "./DonationModal";
 
 import Autor from "../../static/autor.jpg";
 import Dev from "../../static/dev.jpeg";
@@ -10,6 +11,7 @@ export const About = () => {
     title: "",
     text: "",
   });
+  const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
 
   return (
     <div className="about" style={{ background: "#f2f2f2" }}>
@@ -26,11 +28,11 @@ export const About = () => {
           <div className="about-card-content">
             <p>
               To change this, work on a comprehensive English–Uzbek–English dictionary began in 2003. Just two years later, the {" "}
-              <a href="https://search.worldcat.org/title/70168096">
+              <a target="_blank" href="https://search.worldcat.org/title/70168096">
                 first edition 
               </a>{" "}
               was published by{" "}<i>Gʻafur Gʻulom Publishing House</i>, and it's still{" "} 
-              <a href="https://asaxiy.uz/product/akbar-kholmurodov-ravshan-azizov-english-uzbek-uzbek-english-dictionary-tamaddun-nashriyot">
+              <a target="_blank" href="https://asaxiy.uz/product/akbar-kholmurodov-ravshan-azizov-english-uzbek-uzbek-english-dictionary-tamaddun-nashriyot">
                 available 
               </a>{" "}for purchase online.<br />
               Special effort was put into the Uzbek–English section, which remains the most complete and reliable resource of its kind to this day.<br />
@@ -72,7 +74,7 @@ export const About = () => {
               <li>A {" "}<b>Grammar section</b>{" "} with 136 detailed lessons, each paired with video explanations</li>
               <li>Articles with {" "}<b>English learning tips, freelancing advice,</b> and {" "}<b>motivational content</b></li>
               <li>A dedicated {" "}<b>
-              <a href="https://play.google.com/store/apps/details?id=uz.leksika.app">
+              <a target="_blank" href="https://play.google.com/store/apps/details?id=uz.leksika.app">
                 Android app
               </a></b>{" "} to access the dictionary on the go</li>
             </ul>
@@ -84,9 +86,13 @@ export const About = () => {
             <p><b>Leksika.uz is a non-profit project.</b></p>
             <p>Your support helps us grow and improve. Every contribution makes a difference.</p>
             <p><b>You can help us {" "}
-            <a href="https://my.click.uz/clickp2p/DD2B79E46658AE8F842AD72B13A5BC791B024B5760CB7D6743F63D44A46122A8">
-              here.
-            </a></b></p>
+            <span 
+                className="donation-link" 
+                onClick={() => setIsDonationModalOpen(true)}
+                style={{ cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                here
+              </span></b></p>
           </div>
         </div>
 
@@ -168,6 +174,10 @@ export const About = () => {
         
       </div>
       {showModal.open && <div className="overlay"></div>}
+      <DonationModal 
+        isOpen={isDonationModalOpen}
+        onClose={() => setIsDonationModalOpen(false)}
+      />
     </div>
   );
 };

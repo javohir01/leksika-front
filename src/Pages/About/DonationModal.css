@@ -1,0 +1,60 @@
+.donation-modal-content {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.donation-modal-content p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.donation-modal-payment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.donation-modal-payment img {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.donation-modal-links {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.donation-modal-button {
+  background: #01756c;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.donation-modal-button:hover {
+  background: #015951;
+  color: white;
+}
+
+/* Modal o'zini stillarini customize qilish */
+:global(.ant-modal-content) {
+  border-radius: 12px;
+  padding: 24px;
+}
+
+:global(.ant-modal-header) {
+  margin-bottom: 20px;
+}
+
+:global(.ant-modal-title) {
+  font-size: 20px;
+  font-weight: 600;
+}
