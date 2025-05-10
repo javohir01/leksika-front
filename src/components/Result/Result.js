@@ -1,184 +1,223 @@
-import React, { useEffect, useState } from "react";
-import classes from "./Result.module.css";
-import { HiOutlineVolumeUp } from "react-icons/hi";
-import { findEngUzb, findUzbEng } from "../../lib/fetchData.js";
-import notFound from "./notFound.png";
-import notFoundUzb from "./notFoundUzb.png";
-import Ellipse from "../../static/Ellipse.svg";
-import Example from "../Example/Example";
-import { EditOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
-import {
-  setAuthModal,
-  setEnUzEditModal,
-  setEnUzEditStackModal,
-  setUzEnEditModal,
-  setUzEnEditStackModal,
-} from "../../redux/modalSlice";
-import { useAuthUser } from "react-auth-kit";
-import axios from "axios";
+"use client"
+
+import { useEffect, useState } from "react"
+import classes from "./Result.module.css"
+import { HiOutlineVolumeUp } from "react-icons/hi"
+import { findEngUzb, findUzbEng } from "../../lib/fetchData.js"
+import notFound from "./notFound.png"
+import Ellipse from "../../static/Ellipse.svg"
+import Example from "../Example/Example"
+import { EditOutlined } from "@ant-design/icons"
+import { useDispatch } from "react-redux"
+import { setAuthModal, setEnUzEditStackModal, setUzEnEditStackModal } from "../../redux/modalSlice"
+import { useAuthUser } from "react-auth-kit"
+import axios from "axios"
 
 // Cache for word existence checks to avoid redundant API calls
-const wordExistenceCache = {};
+const wordExistenceCache = {}
 
 function Result(props) {
-  const [none, setNone] = useState(false);
-  const [data, setData] = useState([]);
+  const [none, setNone] = useState(false)
+  const [data, setData] = useState([])
 
   useEffect(() => {
     async function fetchAlgo(lang, word) {
+      let fetchedData
       if (lang === "English-Uzbek") {
-        var data = await (await findEngUzb(word)).json();
-        setNone(false);
+        fetchedData = await (await findEngUzb(word)).json()
+        setNone(false)
       } else {
-        var data = await (await findUzbEng(word)).json();
-        setNone(true);
+        fetchedData = await (await findUzbEng(word)).json()
+        setNone(true)
       }
       const notFound = {
         word: 404,
         desc: 404,
         trnasc: 404,
-      };
-      if (data.data == null) {
-        setData(notFound);
-      } else {
-        setData(data.data);
       }
-      console.log(data, word);
+      if (fetchedData.data == null) {
+        setData(notFound)
+      } else {
+        setData(fetchedData.data)
+      }
+      console.log(fetchedData, word)
     }
-    fetchAlgo(props.lang, props.search);
-  }, [props.search, props.lang]);
+    fetchAlgo(props.lang, props.search)
+  }, [props.search, props.lang])
 
   if (data.word === 404 && props.lang === "English-Uzbek") {
-    return <NotFoundEngUzb />;
+    return <NotFoundEngUzb />
   } else if (data.word !== 404 && props.lang === "English-Uzbek") {
-    return <ResulComponent lang={props.lang} data={data} none={none} />;
+    return <ResulComponent lang={props.lang} data={data} none={none} />
   }
   if (data.word === 404 && props.lang === "Uzbek-English") {
-    return <NotFoundUzbEng />;
+    return <NotFoundUzbEng />
   } else if (data.word !== 404 && props.lang === "Uzbek-English") {
-    return <ResulComponent lang={props.lang} data={data} none={none} />;
+    return <ResulComponent lang={props.lang} data={data} none={none} />
   }
 }
 
 function ResulComponent(props) {
-  const auth = useAuthUser()();
-  const dispatch = useDispatch();
-  const [processedDescription, setProcessedDescription] = useState("");
-  const [isProcessing, setIsProcessing] = useState(true);
+  const auth = useAuthUser()()
+  const dispatch = useDispatch()
+  const [processedDescription, setProcessedDescription] = useState("")
+  const [isProcessing, setIsProcessing] = useState(true)
 
   const start = () => {
-    var msg = new SpeechSynthesisUtterance(props.data.word);
-    msg.voice = speechSynthesis.getVoices().filter(function (voice) {
-      return voice.lang === "en-US";
-    })[0];
-    speechSynthesis.speak(msg);
-  };
+    var msg = new SpeechSynthesisUtterance(props.data.word)
+    msg.voice = speechSynthesis.getVoices().filter((voice) => voice.lang === "en-US")[0]
+    speechSynthesis.speak(msg)
+  }
 
   useEffect(() => {
     // Process description text to add links to words
     async function processDescriptionText() {
       if (!props.data.description) {
-        setProcessedDescription("");
-        setIsProcessing(false);
-        return;
+        setProcessedDescription("")
+        setIsProcessing(false)
+        return
       }
 
       try {
-        const description = props.data.description;
-        
-        // Extract words after numbered points and comma-separated lists
-        const numberedPointsRegex = /(\d+\))\s*([a-zA-Z]+(?:,\s*[a-zA-Z]+)*)/g;
-        const matches = [...description.matchAll(numberedPointsRegex)];
-        
-        if (matches.length === 0) {
-          // No numbered points found, return original description
-          setProcessedDescription(description);
-          setIsProcessing(false);
-          return;
-        }
-        
-        // Extract all words to check
-        const wordsToCheck = [];
-        matches.forEach(match => {
-          const wordList = match[2].split(/,\s*/); // Split by comma and optional whitespace
-          wordList.forEach(word => {
+        const description = props.data.description
+
+        // So'zlarni aniqlash uchun yangilangan regexlar
+        const numberedPointsRegex = /(\d+\))\s*([\w’‘`']+(?:,\s*[\w’‘`']+)*)/g
+        const italicTagsRegex = /<i>[^<]+<\/i>(?:\s*<br>\s*|\s*)([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
+        const afterItalicWithBrRegex = /<i>[^<]+<\/i>\s*<br>\s*([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
+        const semicolonSeparatedRegex = /;\s*([a-zA-Z''ʼ'`]+)(?!\s*\d+\))/g
+        const paragraphTagsRegex = /<p>(?:<em>[^<]+<\/em>)?\s*([a-zA-Z''ʼ'`]+(?:\s*[a-zA-Z''ʼ'`]+)*)/g
+
+        // Barcha mos keluvchi so'zlarni yig'ish
+        const wordsToCheck = []
+
+        // 1. Raqamli nuqtalar (numbered points)
+        const numberedMatches = [...description.matchAll(numberedPointsRegex)]
+        numberedMatches.forEach((match) => {
+          const wordList = match[2].split(/,\s*/)
+          wordList.forEach((word) => {
             if (word.trim().length > 1) {
-              wordsToCheck.push(word.trim());
+              wordsToCheck.push(word.trim())
             }
-          });
-        });
-        
-        // Remove duplicates
-        const uniqueWords = [...new Set(wordsToCheck)];
-        
-        // Check which words exist in the API
-        const wordExistsMap = {};
+          })
+        })
+
+        // 2. <i> teglaridan keyin keladigan so'zlar
+        const italicMatches = [...description.matchAll(italicTagsRegex)]
+        italicMatches.forEach((match) => {
+          const word = match[1].trim()
+          if (word.length > 1) {
+            wordsToCheck.push(word)
+          }
+        })
+
+        // 3. <i> tegidan keyin <br> bo'lgan holat
+        const afterItalicBrMatches = [...description.matchAll(afterItalicWithBrRegex)]
+        afterItalicBrMatches.forEach((match) => {
+          const word = match[1].trim()
+          if (word.length > 1) {
+            wordsToCheck.push(word)
+          }
+        })
+
+        // 4. Verguldan keyin keladigan so'zlar
+        const semicolonMatches = [...description.matchAll(semicolonSeparatedRegex)]
+        semicolonMatches.forEach((match) => {
+          const word = match[1].trim()
+          if (word.length > 1) {
+            wordsToCheck.push(word)
+          }
+        })
+
+        // 5. <p> teglaridagi so'zlar (yangi format)
+        const paragraphMatches = [...description.matchAll(paragraphTagsRegex)]
+        paragraphMatches.forEach((match) => {
+          const wordList = match[1].split(/\s+|,\s*/)
+          wordList.forEach((word) => {
+            const cleanWord = word.trim().replace(/[()]/g, "") // Qavslar ichidagi matnni olib tashlash
+            if (cleanWord.length > 1) {
+              wordsToCheck.push(cleanWord)
+            }
+          })
+        })
+
+        console.log("wordsToCheck", wordsToCheck)
+
+        // So'zlar topilmagan bo'lsa, original matnni qaytarish
+        if (wordsToCheck.length === 0) {
+          setProcessedDescription(description)
+          setIsProcessing(false)
+          return
+        }
+
+        // Takrorlanadigan so'zlarni olib tashlash
+        const uniqueWords = [...new Set(wordsToCheck)]
+        console.log("uniqueWords", uniqueWords);
+        // API orqali so'zlarning mavjudligini tekshirish
+        const wordExistsMap = {}
         for (const word of uniqueWords) {
-          // Check if word is already in cache
-          const cacheKey = `${props.lang}-${word.toLowerCase()}`;
+          const cacheKey = `${props.lang}-${word.toLowerCase()}`
           if (wordExistenceCache[cacheKey] !== undefined) {
-            wordExistsMap[word] = wordExistenceCache[cacheKey];
+            wordExistsMap[word] = wordExistenceCache[cacheKey]
           } else {
-            // Check API and cache result
-            const exists = await checkWordExists(word);
-            wordExistenceCache[cacheKey] = exists;
-            wordExistsMap[word] = exists;
+            const exists = await checkWordExists(word)
+            wordExistenceCache[cacheKey] = exists
+            wordExistsMap[word] = exists
           }
         }
-        
-        // Process the HTML to add links
-        let processedHTML = description;
-        
-        // Sort words by length (descending) to avoid replacing parts of longer words
-        const sortedWords = uniqueWords.sort((a, b) => b.length - a.length);
-        
+        console.log("wordExistsMap", wordExistsMap)
+        // HTML matnni linklar bilan almashtirish
+        let processedHTML = description
+        const sortedWords = uniqueWords.sort((a, b) => b.length - a.length)
+
         for (const word of sortedWords) {
           if (wordExistsMap[word]) {
-            // Create a regex that matches the word as a whole word
-            const regex = new RegExp(`\\b${word}\\b`, 'g');
-            
-            // Determine target language for the link
-            const targetLang = props.lang === "English-Uzbek" ? "Uzbek-English" : "English-Uzbek";
-            
-            // Replace with link
+            const regex = new RegExp(
+              `((?<!</?[a-z]+[^>]*>)|(?<=</[a-z]+>))\\b${word.replace(/'/g, "[''`]?")}\\b(?![^<]*>|[^<]*</a>)`,
+              "g",
+            )
+            const targetLang = props.lang === "English-Uzbek" ? "Uzbek-English" : "English-Uzbek"
             processedHTML = processedHTML.replace(
-              regex, 
+              regex,
               `<a href="/en-uz?s=${word}&lang=${targetLang}">${word}</a>`
-            );
+            )
+            console.log('regex',regex, processedHTML)
           }
         }
-        
-        setProcessedDescription(processedHTML);
+
+        setProcessedDescription(processedHTML)
       } catch (error) {
-        console.error("Error processing description:", error);
-        setProcessedDescription(props.data.description);
+        console.error("Error processing description:", error)
+        setProcessedDescription(props.data.description)
       } finally {
-        setIsProcessing(false);
+        setIsProcessing(false)
       }
     }
-    
-    processDescriptionText();
-  }, [props.data.description, props.lang]);
+
+    processDescriptionText()
+  }, [props.data.description, props.lang])
 
   // Function to check if a word exists in the API
   async function checkWordExists(word) {
-    if (!word || word.length < 2) return false;
-    
+    if (!word || word.length < 2) return false
+
     try {
-      let response = null;
+      let response = null
       if (props.lang === "English-Uzbek") {
-        response = await axios.get(`https://back.leksika.uz/words/uz-en?s=${word.toLowerCase()}`);
+        response = await axios.get(`https://back.leksika.uz/words/uz-en?s=${word.toLowerCase()}`)
       } else {
-        response = await axios.get(`https://back.leksika.uz/words/en-uz?s=${word.toLowerCase()}`);
+        response = await axios.get(`https://back.leksika.uz/words/en-uz?s=${word.toLowerCase()}`)
       }
-      return response.data && 
-             response.data.data && 
-             response.data.data.description && 
-             response.data.data.description.trim() !== '';
+      console.log('response',response?.data?.data?.description);
+      return (
+        response.data &&
+        response.data.data &&
+        response.data.data.description &&
+        response.data.data.description.trim() !== ""
+      )
     } catch (error) {
-      console.error(`Error checking word "${word}":`, error);
-      return false;
+      console.error(`Error checking word "${word}":`, error)
+      return false
     }
   }
 
@@ -194,12 +233,10 @@ function ResulComponent(props) {
         <h2>{props.data.word}</h2>
         <button
           onClick={() => {
-            if (!auth) return dispatch(setAuthModal());
+            if (!auth) return dispatch(setAuthModal())
             props.lang === "Uzbek-English"
               ? dispatch(setUzEnEditStackModal({ ...props.data, type: "POST" }))
-              : dispatch(
-                  setEnUzEditStackModal({ ...props.data, type: "POST" })
-                );
+              : dispatch(setEnUzEditStackModal({ ...props.data, type: "POST" }))
           }}
           className={classes.search_btn_search}
         >
@@ -208,10 +245,7 @@ function ResulComponent(props) {
       </div>
       {props.data.transc && (
         <div className={classes.resultSound}>
-          <HiOutlineVolumeUp
-            style={{ cursor: "pointer" }}
-            onClick={() => start()}
-          />
+          <HiOutlineVolumeUp style={{ cursor: "pointer" }} onClick={() => start()} />
           <p>/{props.data.transc}/</p>
         </div>
       )}
@@ -223,7 +257,7 @@ function ResulComponent(props) {
 
       <Example word={props.data.word} />
     </div>
-  );
+  )
 }
 
 const styleClass = {
@@ -232,16 +266,13 @@ const styleClass = {
   marginLeft: "50px",
   marginTop: "24px",
   fontStyle: "italic",
-};
+}
 
 function NotFoundEngUzb() {
   return (
     <div className={classes.result404}>
       <img src={notFound || "/placeholder.svg"} alt="Shakespear" style={{ textAlign: "center" }} />
-      <div
-        className={classes.con}
-        style={{ display: "flex", alignItems: "center" }}
-      >
+      <div className={classes.con} style={{ display: "flex", alignItems: "center" }}>
         <h2 style={{ textAlign: "center" }}> Oops, no such word found!</h2>
         <div
           className={classes.description}
@@ -254,22 +285,18 @@ function NotFoundEngUzb() {
           If you believe there is such a word in the language of <br />
           Shakespeare, please take a few seconds to report it via <br />
           <a href="https://t.me/+998507533366">Telegram</a> or
-          <a href="mailto:akbarbankir@gmail.com">Gmail</a> and we will add it
-          asap!
+          <a href="mailto:akbarbankir@gmail.com">Gmail</a> and we will add it asap!
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function NotFoundUzbEng() {
   return (
     <div className={classes.result404}>
       <img src={notFound || "/placeholder.svg"} alt="Shakespear" style={{ textAlign: "center" }} />
-      <div
-        className={classes.con}
-        style={{ display: "flex", alignItems: "center" }}
-      >
+      <div className={classes.con} style={{ display: "flex", alignItems: "center" }}>
         <h2 style={{ textAlign: "center" }}> Oops, no such word found!</h2>
         <div
           className={classes.description}
@@ -282,12 +309,11 @@ function NotFoundUzbEng() {
           If you believe there is such a word in the language of <br />
           Shakespeare, please take a few seconds to report it via <br />
           <a href="https://t.me/+998507533366">Telegram</a> or
-          <a href="mailto:akbarbankir@gmail.com">Gmail</a> and we will add it
-          asap!
+          <a href="mailto:akbarbankir@gmail.com">Gmail</a> and we will add it asap!
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Result;
+export default Result

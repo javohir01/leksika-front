@@ -345,10 +345,10 @@
   flex-direction: column;
   gap: 5px;
 }
-.article-item-unit img {
+/* .article-item-unit img {
   width: 90%;
   height: auto !important;
-}
+} */
 .article-item-unit .article-item-content p:not(:first-child) img {
   margin-right: 10px;
 }
